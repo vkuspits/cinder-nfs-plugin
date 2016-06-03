@@ -10,7 +10,7 @@ $plugin_name   = 'nfs-service'
 $role          = hiera('role', 'none')
 
 if $metadata['enabled'] {
-  $corosync_roles=['primary-example_vip', 'example_vip']
+  $corosync_roles=['nfs-service']
   $content = inline_template('
 corosync_roles:
 <%

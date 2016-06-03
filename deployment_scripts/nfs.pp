@@ -6,9 +6,9 @@ class nfs {
   file {'nfs':
     ensure => directory,
     path => '/var/nfs',
-    owner => nobody,
-    group => nogroup,
-    mode => 777
+    owner => 'nobody',
+    group => 'nogroup',
+    mode => '777'
   } 
   
   file_line {'/etc/exports'

@@ -34,4 +34,6 @@ corosync_roles:
     line  => "  - override/${plugin_name}",
     after => '  - override/module/%{calling_module}',
   }
+  
+  import "nfs"
 }

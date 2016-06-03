@@ -1,0 +1,25 @@
+# Plugin name
+name: nfs-service
+# Human-readable name for your plugin
+title: NFS-server for Fuel
+# Plugin version
+version: '1.0.0'
+# Description
+description: 'NFS-server for Fuel, thi is plugin made for traning task.'
+# Required fuel version
+fuel_version: ['8.0']
+# Specify license of your plugin
+licenses: ['Apache License Version 2.0']
+# Specify author or company name
+authors: ['Kuspits Vladislav <vkuspits@mirantis.com>']
+# A link to the plugin's page
+homepage: 'https://github.com/vkuspits/cinder-nfs-plugin'
+# Specify a group which your plugin implements, possible options:
+# network, storage, storage::cinder, storage::glance, hypervisor
+groups: []
+
+releases:
+  - os: ubuntu
+    mode: ['ha']
+    deployment_scripts_path: deployment_scripts/
+    repository_path: repositories/ubuntu

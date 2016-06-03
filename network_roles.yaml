@@ -1,0 +1,14 @@
+- id: "nfs_service_net_role_s"
+  # Role mapping to network
+  default_mapping: "storage"
+  properties:
+    # Should be true if network role requires subnet being set
+    subnet: true
+    # Should be true if network role requires gateway being set
+    gateway: false
+    vip:
+         # Unique VIP name
+       - name: "vip_plugin_s"
+         # Optional linux namespace for VIP
+         namespace: "haproxy"
+         node_roles: ["nfs-service"]

@@ -5,7 +5,7 @@ title: NFS-server for Fuel
 # Plugin version
 version: '1.0.0'
 # Description
-description: 'NFS-server for Fuel, thi is plugin made for traning task.'
+description: 'NFS-server for Fuel, this plugin made for traning task.'
 # Required fuel version
 fuel_version: ['8.0']
 # Specify license of your plugin
@@ -20,6 +20,9 @@ groups: []
 
 releases:
   - os: ubuntu
+    version: liberty-8.0
     mode: ['ha']
     deployment_scripts_path: deployment_scripts/
     repository_path: repositories/ubuntu
+
+package_version: '3.0.0'

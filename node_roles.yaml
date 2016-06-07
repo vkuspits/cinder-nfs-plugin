@@ -1,0 +1,11 @@
+nfs-service:
+  name: "Storage - NFS"
+  description: "This service providing clients with transparent access to the files and the server file system."
+  conflicts:
+    - controller
+    - mongo
+    - base-os
+    - virt
+    - ironic
+  has_primary: false
+  weight: 40

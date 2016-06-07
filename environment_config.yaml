@@ -1,0 +1,8 @@
+attributes:
+  nfs-share-dir:
+    value: 'Set nfs-share'
+    label: 'Share directory'
+    description: 'Enter the name of NFS-share directory'
+    weight: 25
+    type: "text"
+

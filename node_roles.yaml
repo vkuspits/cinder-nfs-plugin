@@ -1,4 +1,4 @@
-nfs-srvice:
+nfs-service:
   name: "Storage - NFS"
   description: "This service providing clients with transparent access to the files and the server file system."
   conflicts:

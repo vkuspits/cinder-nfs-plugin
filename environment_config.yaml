@@ -1,7 +1,8 @@
 attributes:
-  nfs_service_text:
-    value: 'Set default value'
-    label: 'Text field'
-    description: 'Description for text field'
+  nfs-share-dir:
+    value: 'Set nfs-share'
+    label: 'Share directory'
+    description: 'Enter the name of NFS-share directory'
     weight: 25
     type: "text"
+

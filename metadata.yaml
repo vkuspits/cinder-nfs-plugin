@@ -3,7 +3,7 @@ name: nfs-service
 # Human-readable name for your plugin
 title: NFS-server for Fuel
 # Plugin version
-version: '1.0.0'
+version: '1.0.1'
 # Description
 description: 'NFS-server for Fuel, this plugin made for traning task.'
 # Required fuel version

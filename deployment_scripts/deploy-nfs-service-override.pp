@@ -48,6 +48,5 @@ corosync_roles:
        ensure  => 'mounted',
        clients => '${storage_net}(rw,insecure,async,no_root_squash) localhost(rw)'
     }
-    require => Module['haraldsk-nfs'],
   }  
 }

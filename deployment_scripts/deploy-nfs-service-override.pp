@@ -5,7 +5,7 @@ $nfs_plugin    = hiera('nfs-service', {})
 $metadata      = pick($nfs_plugin['metadata'], {})
 $data_folder   = $metadata['nfs-share-dir']
 $network       = hiera('network_metadata', {})
-$storage_net   = $network['storage']
+$storage_net   = regsubst($network['vips']['storage']['ipaddr'], '(\.[0-9]*$)', '')
 
 $hiera_dir     = '/etc/hiera/override'
 $plugin_yaml   = 'nfs-service.yaml'
@@ -46,7 +46,7 @@ corosync_roles:
     include nfs::server
     nfs::server::export{ '/$data_folder':
        ensure  => 'mounted',
-       clients => '${storage_net}(rw,insecure,async,no_root_squash) localhost(rw)'
+       clients => '${storage_net}.0/24(rw,insecure,async,no_root_squash) localhost(rw)'
     }
     require => Module['haraldsk-nfs'],
   }  

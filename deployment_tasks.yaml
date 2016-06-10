@@ -13,11 +13,8 @@
 - id: deploy-nfs-service
   type: puppet
   role: [nfs-service]
-  requires: [globals]
-  required_for: [cluster]
-  tasks: [fuel_pkgs, hiera, globals, tools, logging, netconfig,
-      hosts, firewall, ssl-keys-saving, ssl-add-trust-chain, hosts, cluster,
-      virtual_ips]
+  requires: [netconfig]
+  required_for: [deploy_end]
   parameters:
     puppet_manifest: deploy-nfs-service-override.pp
     puppet_modules: /etc/puppet/modules
@@ -26,11 +23,8 @@
 - id: deploy-nfs-client
   type: puppet
   role: [controller]
-  requires: [globals]
-  required_for: [cluster]
-  tasks: [fuel_pkgs, hiera, globals, tools, logging, netconfig,
-      hosts, firewall, ssl-keys-saving, ssl-add-trust-chain, hosts, cluster,
-      virtual_ips]
+  requires: [netconfig]
+  required_for: [deploy_end]
   parameters:
     puppet_manifest: deploy-nfs-client-override.pp
     puppet_modules: /etc/puppet/modules

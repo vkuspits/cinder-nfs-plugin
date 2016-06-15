@@ -1,53 +1,47 @@
 notice('MODULAR: nfs-service.pp')
 
 
-$nfs_plugin    = hiera('nfs-service', {})
-$metadata      = pick($nfs_plugin['metadata'], {})
-$data_folder   = $metadata['nfs-share-dir']
-$network       = hiera('network_metadata', {})
-$storage_net   = regsubst($network['vips']['storage']['ipaddr'], '(\.[0-9]*$)', '')
+$nfs_plugin_data = hiera('nfs-service', {})
+$nfs_endpoint = $nfs_plugin_data['nfs_endpoint']
+$nfs_net_mask = '255.255.255.0'
+if $::osfamily == 'Debian' {
+  $required_pkgs = [ 'rpcbind', 'nfs-kernel-server' ]
+  $services_name = 'nfs-kernel-server'
 
-$hiera_dir     = '/etc/hiera/override'
-$plugin_yaml   = 'nfs-service.yaml'
-$plugin_name   = 'nfs-service'
-$role          = hiera('role', 'none')
-
-if $metadata['enabled'] {
-  $corosync_roles=['nfs-service']
-  $content = inline_template('
-corosync_roles:
-<%
-@corosync_roles.each do |crole|
-%>  - <%= crole %>
-<% end -%>
-')
-
-  file { '/etc/hiera/override':
-    ensure  => directory,
-  }
-
-  file { "${hiera_dir}/${plugin_yaml}":
-    ensure  => file,
-    content => $content,
-    require => File['/etc/hiera/override'],
-  }
-
-  file_line {"${plugin_name}_hiera_override":
-    path  => '/etc/hiera.yaml',
-    line  => "  - override/${plugin_name}",
-    after => '  - override/module/%{calling_module}',
-  }
-  
-  module {'haraldsk-nfs':
+  package { $required_pkgs:
     ensure => present,
   }
-  
-  node server {
-    include nfs::server
-    nfs::server::export{ '/$data_folder':
-       ensure  => 'mounted',
-       clients => '${storage_net}.0/24(rw,insecure,async,no_root_squash) localhost(rw)'
+
+  file { $nfs_endpoint:
+    ensure => 'directory',
+    owner => 'nobody',
+    group => 'nogroup',
+    mode   => '0777',
+  }
+
+  firewall { '150 allow tcp access to nfs service':
+    port   => [111, 2049],
+    proto  => ['tcp', 'udp'],
+    action => accept,
+  }
+
+  service { $services_name:
+    ensure => running,
+    enable => true,
+  }
+
+  file { '/etc/exports':
+    content => "${nfs_endpoint} ${::network_br_storage}/${nfs_net_mask}(rw,sync,no_subtree_check)",
+    notify  => Service[$services_name]
+  }
+
+  exec { 'update_nfs_exports':
+      command     => 'exportfs -ra',
+      path        => '/bin:/usr/bin:/sbin:/usr/sbin',
+      refreshonly => true,
     }
-    require => Module['haraldsk-nfs'],
-  }  
+
+else {
+  fail("Unsuported osfamily ${::osfamily}, currently Debian are the only supported platforms")
 }
+

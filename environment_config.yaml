@@ -1,8 +1,19 @@
 attributes:
-  nfs-share-dir:
-    value: 'Set nfs-share'
-    label: 'Share directory'
-    description: 'Enter the name of NFS-share directory'
+  nfs_endpoint:
+    value: '/nfs'
+    label: 'NFS endpoints (Name of shared folder on NFS Server)'
+    description: 'e.g. /nfs/vol'
     weight: 25
     type: "text"
-
+    regex:
+      source: '.+'
+      error: "This field should not be empty"
+  nfs_mount_point:
+    value: '/mnt/nfs'
+    label: 'Cinder mount folder:'
+    description: 'for example /mnt/nfs'
+    weight: 20
+    type: 'text'
+    regex:
+      source: '.+'
+      error: "This field should not be empty"

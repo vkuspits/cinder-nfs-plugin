@@ -17,32 +17,39 @@
   required_for:
     - deploy_end
     - controller
-  tasks:
-    - hiera
-    - globals
+  tasks: [fuel_pkgs, hiera, globals, tools, logging, netconfig,
+          hosts, firewall]
   parameters:
     strategy:
      type: parallel
-
 
 - id: deploy-nfs-service
   type: puppet
   groups: [nfs-service_vip, nfs-service]
   role: [nfs-service]
-  requires: [netconfig]
+  requires: [deploy_start]
   required_for: [deploy_end]
   parameters:
-    puppet_manifest: deploy-nfs-service-override.pp
-    puppet_modules: /etc/puppet/modules
-    timeout: 600
+    puppet_manifest: "puppet/manifests/deploy-nfs-service-override.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
+    timeout: 3600
 
-- id: deploy-nfs-client
+- id: deploy-cinder-nfs
   type: puppet
-  role: [controller]
-  requires: [netconfig]
+  role: [cinder]
+  requires: [deploy_start]
   required_for: [deploy_end]
   parameters:
-    puppet_manifest: deploy-nfs-client-override.pp
-    puppet_modules: /etc/puppet/modules
-    timeout: 600
+    puppet_manifest: "puppet/manifests/deploy-nfs-client-override.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules/"
+    timeout: 3600
 
+- id: deploy-controller-nfs
+  type: puppet
+  role: [primary-controller, controller]
+  requires: [post_deployment_start]
+  required_for: [post_deployment_end]
+  parameters:
+    puppet_manifest: "puppet/manifests/deploy-nfs-client-override.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules/"
+    timeout: 3600

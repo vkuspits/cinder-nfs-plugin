@@ -27,7 +27,11 @@
   type: puppet
   groups: [nfs-service_vip, nfs-service]
   role: [nfs-service]
+<<<<<<< HEAD
   requires: [deploy_start]
+=======
+  requires: [netconfig]
+>>>>>>> 6fece3572db67d4fe920862b195c99d17c651b14
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/deploy-nfs-service-override.pp"
@@ -36,8 +40,13 @@
 
 - id: deploy-cinder-nfs
   type: puppet
+<<<<<<< HEAD
   role: [cinder]
   requires: [deploy_start]
+=======
+  role: [controller]
+  requires: [netconfig]
+>>>>>>> 6fece3572db67d4fe920862b195c99d17c651b14
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/deploy-nfs-client-override.pp"

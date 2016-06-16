@@ -67,6 +67,8 @@ if $::osfamily == 'Debian' {
       value => '0.95';
     'DEFAULT/nfs_mount_attempts' :
       value => '3';
+    'DEFAULT/nfs_sparsed_volumes' :
+      value => false;
     'DEFAULT/nfs_mount_point_base' :
       value => $nfs_mount_point;
   }

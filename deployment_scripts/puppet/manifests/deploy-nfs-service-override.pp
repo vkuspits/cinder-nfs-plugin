@@ -5,10 +5,10 @@ $nfs_plugin_data = hiera('nfs-service', {})
 $nfs_endpoint = $nfs_plugin_data['nfs_endpoint']
 $nfs_net_mask = '255.255.255.0'
 if $::osfamily == 'Debian' {
-  $required_pkgs = [ 'rpcbind', 'nfs-kernel-server' ]
+  $required_packages = [ 'rpcbind', 'nfs-kernel-server' ]
   $services_name = 'nfs-kernel-server'
 
-  package { $required_pkgs:
+  package { $required_packages:
     ensure => present,
   }
 
@@ -44,4 +44,3 @@ if $::osfamily == 'Debian' {
 else {
   fail("Unsuported osfamily ${::osfamily}, currently Debian are the only supported platforms")
 }
-

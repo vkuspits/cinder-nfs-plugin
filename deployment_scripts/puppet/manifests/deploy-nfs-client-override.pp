@@ -24,10 +24,10 @@ define nfs_server_ip {
 }
 
 if $::osfamily == 'Debian' {
-  $required_pkgs = [ 'nfs-common', 'cinder-volume' ]
+  $required_packages = [ 'nfs-common', 'cinder-volume' ]
   $service_name = 'cinder-volume'
 
-  package { $required_pkgs:
+  package { $required_pakages:
     ensure => present,
   }
 

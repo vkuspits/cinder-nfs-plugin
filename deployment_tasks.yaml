@@ -39,7 +39,6 @@
   type: puppet
   role: [cinder]
   requires: [deploy_start]
-  role: [compute]
   requires: [netconfig]
   required_for: [deploy_end]
   parameters:

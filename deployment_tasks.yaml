@@ -39,6 +39,10 @@
   type: puppet
   role: [cinder]
   requires: [deploy_start]
+<<<<<<< HEAD
+=======
+  role: [compute]
+>>>>>>> 7791faa7dc4efc30032c488c7cbd6cb82ce363d1
   requires: [netconfig]
   required_for: [deploy_end]
   parameters:

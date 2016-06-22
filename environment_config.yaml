@@ -1,8 +1,8 @@
 attributes:
   nfs_endpoint:
     value: '/nfs'
-    label: 'NFS endpoints (Name of shared folder on NFS Server)'
-    description: 'e.g. /nfs/vol'
+    label: 'Name of shared folder on NFS Server (NFS endpoint)'
+    description: 'for exmple /nfs/vol'
     weight: 25
     type: "text"
     regex:

@@ -14,6 +14,7 @@ $nfs_endpoint       = $nfs_plugin_data['nfs_endpoint']
 
 
 #get storage IP of NFS
+define nfs_server_ip {
   if $name['role'] == 'nfs-server' {
     file_line { "nfs_line${name['uid']}":
       line => "${name['storage_address']}:${nfs_endpoint}",

@@ -40,7 +40,7 @@ if $::osfamily == 'Debian' {
       path        => '/bin:/usr/bin:/sbin:/usr/sbin',
       refreshonly => true,
     }
-
+}
 else {
   fail("Unsuported osfamily ${::osfamily}, currently Debian are the only supported platforms")
 }

@@ -14,8 +14,8 @@ if $::osfamily == 'Debian' {
 
   file { $nfs_endpoint:
     ensure => 'directory',
-    owner => 'nobody',
-    group => 'nogroup',
+    owner  => 'nobody',
+    group  => 'nogroup',
     mode   => '0777',
   }
 

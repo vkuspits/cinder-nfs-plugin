@@ -1,20 +1,19 @@
 notice('MODULAR: nfs-client-cinder.pp')
 
-$nodes = hiera('nodes', {})
-$nfs_plugin_data = hiera('nfs-service', {})
-$cinder_nfs_share = '/etc/cinder/nfs_shares.txt'
+$nodes              = hiera('nodes', {})
+$nfs_plugin_data    = hiera('nfs-service', {})
+$cinder_nfs_share   = '/etc/cinder/nfs_shares.txt'
 
 #path to nfs folder on cinder server
-$nfs_mount_point = $nfs_plugin_data['nfs_mount_point']
+$nfs_mount_point    = $nfs_plugin_data['nfs_mount_point']
 
 #path to nfs folder on nfs server
-$nfs_endpoint = $nfs_plugin_data['nfs_endpoint']
+$nfs_endpoint       = $nfs_plugin_data['nfs_endpoint']
 
 #$nfs_mount_options = $nfs_plugin_data['nfs_mount_options']
 
 
-# get storage IP of NFS 
-define nfs_server_ip {
+#get storage IP of NFS
   if $name['role'] == 'nfs-server' {
     file_line { "nfs_line${name['uid']}":
       line => "${name['storage_address']}:${nfs_endpoint}",
@@ -25,26 +24,26 @@ define nfs_server_ip {
 
 if $::osfamily == 'Debian' {
   $required_packages = [ 'nfs-common', 'cinder-volume' ]
-  $service_name = 'cinder-volume'
+  $service_name      = 'cinder-volume'
 
   package { $required_pakages:
     ensure => present,
   }
 
   service { 'cinder-volume':
-    ensure => "running",
-    provider => "upstart",
-    hasrestart => "true",
-    hasstatus => "false",
-    restart => 'service cinder-volume restart',
+    ensure      => running,
+    provider    => upstart,
+    hasrestart  => true,
+    hasstatus   => false,
+    restart     => 'service cinder-volume restart',
   }
 
   file { $cinder_nfs_share:
     ensure => present,
     owner  => 'cinder',
     group  => 'cinder',
-    force  => 'true',
-    notify => Service["cinder-volume"]
+    force  => true,
+    notify => Service['cinder-volume'],
   }
 
   file { $nfs_mount_point:
@@ -54,8 +53,8 @@ if $::osfamily == 'Debian' {
     group  => 'cinder',
   }
 
-  # cinder config 
-  # openstack/cinder module installation required
+#cinder config
+#openstack/cinder module installation required
   cinder_config {
     'DEFAULT/volume_driver' :
       value => 'cinder.volume.drivers.nfs.NfsDriver';
@@ -72,7 +71,7 @@ if $::osfamily == 'Debian' {
     'DEFAULT/nfs_mount_point_base' :
       value => $nfs_mount_point;
   }
-  
+
   nfs_server_ip { $nodes: }
 
 }

@@ -32,27 +32,13 @@
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/deploy-nfs-service-override.pp"
-    puppet_modules: "puppet/modules:/etc/puppet/modules"
-    timeout: 3600
+    timeout: 600
 
-- id: deploy-cinder-nfs
+- id: deploy-clients-nfs
   type: puppet
-  role: [cinder]
-  requires: [deploy_start]
-  role: [compute]
-  requires: [netconfig]
-  required_for: [deploy_end]
-  parameters:
-    puppet_manifest: "puppet/manifests/deploy-nfs-client-override.pp"
-    puppet_modules: "puppet/modules:/etc/puppet/modules/"
-    timeout: 3600
-
-- id: deploy-controller-nfs
-  type: puppet
-  role: [primary-controller, controller]
+  role: [primary-controller, controller, cinder]
   requires: [post_deployment_start]
   required_for: [post_deployment_end]
   parameters:
     puppet_manifest: "puppet/manifests/deploy-nfs-client-override.pp"
-    puppet_modules: "puppet/modules:/etc/puppet/modules/"
-    timeout: 3600
+    timeout: 600

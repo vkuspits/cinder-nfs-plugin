@@ -3,7 +3,6 @@ notice('MODULAR: nfs-service.pp')
 
 $nfs_plugin_data = hiera('nfs-service', {})
 $nfs_share = $nfs_plugin_data['nfs_share']
-$nfs_net_mask = '255.255.255.0'
 if $::osfamily == 'Debian' {
   $required_packages = [ 'rpcbind', 'nfs-kernel-server' ]
   $services_name = 'nfs-kernel-server'
@@ -31,7 +30,7 @@ if $::osfamily == 'Debian' {
   }
 
   file { '/etc/exports':
-    content => "${nfs_share} ${::network_br_storage}/${nfs_net_mask}(rw,sync,no_subtree_check)",
+    content => "${nfs_share} ${::network_br_storage}/${::network_br_storage_net_mask}(rw,sync,no_subtree_check)",
     notify  => Service[$services_name]
   }
 

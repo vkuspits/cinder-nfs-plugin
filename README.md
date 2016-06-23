@@ -1,4 +1,4 @@
 # cinder-nfs-plugin
-Fuel Plugin to backup /etc/ to a new backup/NFS server. Cinder NFS plugin.
+Cinder NFS plugin.
 
 This plugin just for trainig

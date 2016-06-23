@@ -8,7 +8,7 @@ $cinder_nfs_share   = '/etc/cinder/nfs_shares.txt'
 $nfs_mount_point    = $nfs_plugin_data['nfs_mount_point']
 
 #path to nfs folder on nfs server
-$nfs_endpoint       = $nfs_plugin_data['nfs_endpoint']
+$nfs_share       = $nfs_plugin_data['nfs_share']
 
 #$nfs_mount_options = $nfs_plugin_data['nfs_mount_options']
 
@@ -17,7 +17,7 @@ $nfs_endpoint       = $nfs_plugin_data['nfs_endpoint']
 define nfs_server_ip {
   if $name['role'] == 'nfs-server' {
     file_line { "nfs_line${name['uid']}":
-      line => "${name['storage_address']}:${nfs_endpoint}",
+      line => "${name['storage_address']}:${nfs_share}",
       path => $cinder_nfs_share,
     }
   }

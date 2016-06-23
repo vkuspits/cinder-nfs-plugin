@@ -19,7 +19,7 @@ if $::osfamily == 'Debian' {
   }
 
   firewall { '150 allow tcp access to nfs service':
-    port   => [111, 2049],
+    dport   => [111, 2049],
     proto  => ['tcp', 'udp'],
     action => accept,
   }
@@ -30,7 +30,7 @@ if $::osfamily == 'Debian' {
   }
 
   file { '/etc/exports':
-    content => "${nfs_share} ${::network_br_storage}/${::network_br_storage_net_mask}(rw,sync,no_subtree_check)",
+    content => "${nfs_share} ${::network_br_storage}/${::netmask_br_storage}(rw,sync,no_subtree_check)",
     notify  => Service[$services_name]
   }
 

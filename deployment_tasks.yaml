@@ -32,6 +32,7 @@
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/deploy-nfs-service-override.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
     timeout: 600
 
 - id: deploy-clients-nfs
@@ -41,4 +42,5 @@
   required_for: [post_deployment_end]
   parameters:
     puppet_manifest: "puppet/manifests/deploy-nfs-client-override.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
     timeout: 600

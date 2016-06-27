@@ -19,7 +19,7 @@ if $::osfamily == 'Debian' {
   }
 
   firewall { '150 allow tcp access to nfs service':
-    dport   => [111, 2049],
+    dport  => [111, 2049],
     proto  => ['tcp', 'udp'],
     action => accept,
   }

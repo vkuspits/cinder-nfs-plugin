@@ -27,11 +27,11 @@ if $::osfamily == 'Debian' {
   $required_packages = [ 'nfs-common', 'cinder-volume' ]
   $service_name      = 'cinder-volume'
 
-  package { $required_pakages:
+  package { $required_packages:
     ensure => present,
   }
 
-  service { 'cinder-volume':
+  service { $service_name:
     ensure      => running,
     provider    => upstart,
     hasrestart  => true,

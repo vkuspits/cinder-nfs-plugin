@@ -1,15 +1,3 @@
-- id: nfs-service_vip
-  type: group
-  role: [nfs-service]
-  requires: [deploy_start]
-  required_for: [deploy_end]
-  tasks: [fuel_pkgs, hiera, globals, tools, logging, netconfig,
-      hosts, firewall, ssl-keys-saving, ssl-add-trust-chain, hosts, cluster,
-      virtual_ips]
-  parameters:
-    strategy:
-      type: one_by_one
-
 - id: nfs-service
   type: group
   role: [nfs-service]
@@ -21,7 +9,7 @@
           hosts, firewall]
   parameters:
     strategy:
-     type: parallel
+     type: one_by_one
 
 - id: deploy-nfs-service
   type: puppet

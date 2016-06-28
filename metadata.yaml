@@ -7,7 +7,7 @@ version: '1.2.2'
 # Description
 description: 'NFS-server for Fuel, this plugin made for traning task.'
 # Required fuel version
-fuel_version: ['8.0']
+fuel_version: ['8.0', '9.0']
 # Specify license of your plugin
 licenses: ['Apache License, Version 2.0']
 # Specify author or company name

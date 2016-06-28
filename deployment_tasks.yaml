@@ -1,5 +1,8 @@
+#version 2.0.0 -flag for TBD, if anyone task dont have this
+#flag, nailgun start Granular deploy
 - id: nfs-service
   type: group
+  version: 2.0.0
   role: [nfs-service]
   requires: [deploy_start]
   required_for:
@@ -9,14 +12,14 @@
           hosts, firewall]
   parameters:
     strategy:
-     type: one_by_one
+     type: parallel
 
 - id: deploy-nfs-service
   type: puppet
+  version: 2.0.0
   groups: [nfs-service_vip, nfs-service]
   role: [nfs-service]
-  requires: [deploy_start]
-  requires: [netconfig]
+  requires: [deploy_start, netconfig]
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/deploy-nfs-service-override.pp"
@@ -25,9 +28,12 @@
 
 - id: deploy-clients-nfs
   type: puppet
+  version: 2.0.0
+  cross-depended-by:
+    - name: /deploy-nfs-service/
   role: [primary-controller, controller, cinder]
-  requires: [post_deployment_start]
-  required_for: [post_deployment_end]
+  requires: [deploy_start, netconfig]
+  required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/deploy-nfs-client-override.pp"
     puppet_modules: "puppet/modules:/etc/puppet/modules"

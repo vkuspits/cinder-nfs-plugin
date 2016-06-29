@@ -15,7 +15,7 @@ $nfs_share       = $nfs_plugin_data['nfs_share']
 
 #get storage IP of NFS
 define nfs_server_ip {
-  if $name['role'] == 'nfs-server' {
+  if $name['role'] == 'nfs-service' {
     file_line { "nfs_line${name['uid']}":
       line => "${name['storage_address']}:${nfs_share}",
       path => $cinder_nfs_share,

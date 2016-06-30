@@ -4,6 +4,8 @@ $nodes              = hiera('nodes', {})
 $nfs_plugin_data    = hiera('nfs-service', {})
 $cinder_nfs_share   = '/etc/cinder/nfs_shares.txt'
 
+$nfs_service_name   = 'nfs'
+
 #path to nfs folder on cinder server
 $nfs_mount_point    = $nfs_plugin_data['nfs_mount_point']
 
@@ -65,12 +67,16 @@ if $::osfamily == 'Debian' {
       value => '1.0';
     'DEFAULT/nfs_used_ratio' :
       value => '0.95';
-    'DEFAULT/nfs_mount_attempts' :
+    "${nfs_service_name}/nfs_mount_attempts" :
       value => '3';
     'DEFAULT/nfs_sparsed_volumes' :
-      value => false;
+      value => true;
     'DEFAULT/nfs_mount_point_base' :
       value => $nfs_mount_point;
+    'DEFAULT/dafult_volume_type' :
+      value => $nfs_service>name;
+    'DEFAULT/volume_backend_name' :
+      value => $nfs_service_name;
   }
 
   nfs_server_ip { $nodes: }

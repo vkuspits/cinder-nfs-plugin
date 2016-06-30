@@ -77,6 +77,8 @@ if $::osfamily == 'Debian' {
       value => $nfs_service_name;
     'DEFAULT/volume_backend_name' :
       value => $nfs_service_name;
+    'DEFAULT/enabled_backends' :
+      value => $nfs_service_name;
   }
 
   nfs_server_ip { $nodes: }

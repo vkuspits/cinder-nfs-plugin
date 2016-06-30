@@ -74,7 +74,7 @@ if $::osfamily == 'Debian' {
     'DEFAULT/nfs_mount_point_base' :
       value => $nfs_mount_point;
     'DEFAULT/dafult_volume_type' :
-      value => $nfs_service>name;
+      value => $nfs_service_name;
     'DEFAULT/volume_backend_name' :
       value => $nfs_service_name;
   }

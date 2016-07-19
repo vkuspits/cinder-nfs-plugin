@@ -11,7 +11,7 @@ if $::osfamily == 'Debian' {
     ensure => present,
   }
 
-  file { $nfs_share:
+  file { '/opt/${nfs_share}':
     ensure => 'directory',
     owner  => 'nobody',
     group  => 'nogroup',

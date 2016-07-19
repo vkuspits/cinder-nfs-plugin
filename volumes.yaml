@@ -1,7 +1,15 @@
-volumes_roles_mapping:
-  # Default role mapping
-  example_vip:
-    - {allocate_size: "min", id: "os"}
+volumes:
+  - id: "nfs-sharing"
+    type: "partition"
+    min_size:
+      generator: "calc_gb_to_mb"
+      generator_args: [30]
+    label: "NFS-sharing"
+    mount: "/opt"
+    file_system: "ext4"
+    name: "nfs-sharing"
 
-# Set here new volumes for your role
-volumes: []
+volumes_roles_mapping:
+  nfs-service:
+    - {allocate_size: "min", id: "os"}
+    - {allocate_size: "all", id: "nfs-sharing"}
